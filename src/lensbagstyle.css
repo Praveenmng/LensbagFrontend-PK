@@ -1,0 +1,310 @@
+
+    .topbar .nav-link {
+        color: #000;
+    }
+
+    .topbar .nav-link.active {
+        color: #8b1111;
+    }
+
+    .logo {
+        margin: 10px;
+        padding: 20px;
+
+    }
+
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing:border-box;
+}
+.studio{
+    display: flex;
+}
+#txtclr{
+    color: #f0f0f0;
+}
+
+body {
+  background-color: #f0f0f0; 
+  height: 100vh; 
+}
+
+.black-rectangle {
+  width: 50%; 
+  background-color: black;
+}
+#landingfont {
+    position: absolute;
+    top: 318px;
+    left: 28px;
+    color: white;
+    font-size: 57px;  /* Default font size for XL screens */
+}
+
+/* For large screens (992px and above) */
+@media (max-width: 1199px) {
+    #landingfont {
+        font-size: 48px;  /* Smaller font size for large tablets */
+    }
+}
+
+/* For medium screens (768px and above) */
+@media (max-width: 991px) {
+    #landingfont {
+        font-size: 40px;  /* Font size for tablets */
+    }
+}
+
+/* For small screens (576px and above) */
+@media (max-width: 767px) {
+    #landingfont {
+        font-size: 30px;  /* Font size for small tablets */
+    }
+}
+
+/* For very small screens (mobile phones) */
+@media (max-width: 576px) {
+    #landingfont {
+        font-size: 22px;  /* Font size for mobile phones */
+    }
+}
+
+#subhead
+{
+    position: absolute;
+    top: 469px;
+    color:white;
+    left:32px;   
+}
+#bt
+{
+   
+  position: absolute;
+  top: 519px;
+  left: 30px;
+  padding: 10px;
+  margin:5px;
+  background-color:#ffffff;
+  color:black;
+  font-size: 16px;
+  border-radius:5px; 
+  border: none;
+
+}
+#heading1
+{   color: #ffffff;
+    position: absolute;
+    top: 900px;
+    left: 1236px;
+}
+
+.buttons{
+    position: relative;
+    top: 54px;
+}
+.list{
+    color: white;
+    position: relative;
+    left: 328px;
+    top: 157px;
+    margin-bottom: 20px;
+    list-style-type: none; 
+    
+}
+.ld-img1{
+    width:100%;
+    height:fit-content;
+
+}
+.ld-img2{
+    width:100%;
+    height:fit-content
+
+}
+
+.list {
+    
+    font-size: x-large;
+    margin-bottom: 25px; /* Adjust the value as needed */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+.card{
+    position:relative;
+    top:200px;
+    left:-19px; 
+
+}
+.icon{
+    width: 36px;
+    height:34px;
+}
+.container1{
+    display: flex;
+    flex-wrap:wrap;
+    position: relative;
+    margin: 10px;
+    padding:0px;
+    height: auto;
+    width: 100%;
+    justify-content: space-around;
+    
+}
+.container2{
+    display: flex;
+    flex-wrap:wrap;
+    position: relative;
+    margin: 10px;
+    margin-bottom:40px;
+    padding:0px;
+    height: auto;
+     width: 100%;
+    justify-content: space-around;
+
+
+}
+.bi{
+    fill: black;
+}
+.card {
+    position: relative;
+    margin:20px;
+    padding:0px;
+    border:none;
+    border-radius: 5px;
+    width: 19rem;
+    display: block;
+    top:25px;
+    
+}
+.search-input{
+    position: relative;
+    font-size:medium;
+    width:1250px;
+    height: 47px;
+    border: none;
+    border-radius: 9px;
+    padding-left: 20px;
+
+}
+#category{
+    position: relative;
+    height: 47px;
+    border: none;
+    border-radius: 10px;
+    padding-left: 11px;
+}
+#cameras{
+    position: relative;
+    height: 47px;
+    border: none;
+    border-radius: 10px;
+    padding-left: 11px;
+
+}
+.navbar-brand{
+    font-size:30px;
+    color: black;
+}
+.form-select{
+    width:50%
+}
+
+#heading{
+    position: relative;
+    left: 19px;
+    top: 6px;
+}
+
+#bg{
+    width: 100%;
+    position: relative;
+    top: 135px;
+    
+}
+
+#cartbutton{
+    position: relative;
+    left: 92px;
+}
+#likebutton{
+    position: relative;
+    left: 85px; 
+}
+.image-container
+{
+width: 100%;
+position:relative;   
+
+background-size: cover; 
+background-repeat: no-repeat; 
+background-position: center; 
+height:auto;
+
+
+}
+#txt
+{
+    position: relative;
+    color: white;
+    top: 77px;
+    left: 39px;
+    font-size: 3.5rem   ;
+}
+.iconsection{
+         display: flex;
+         flex-wrap: wrap;
+        flex-direction: row;
+        position: relative;
+        top: -80%;
+        justify-content: space-between;
+        margin: 37px;
+        top:96px;
+        padding: 25px;
+    
+}
+.nameoficon{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+    justify-content: space-between;
+    margin:36px;
+    top: 63px;
+    color: white;
+}
+#container3{
+    position: relative;
+    top: -149px;
+    left: 33px;
+}
+
+.searchbarsection{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin:10px;
+}
+.image-container{
+    width: 100%;
+    height: 652px;
+}
+.black-rectangle{
+    display: flex;
+    flex-direction: column;
+
+}
+.list{
+    width: fit-content;
+ 
+}
+.list> p{
+    font-size: large;
+}
+
+
+
