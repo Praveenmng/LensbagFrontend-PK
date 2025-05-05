@@ -1,15 +1,13 @@
 import React from "react";
 import Header from "../Components/Header";
 import SearchSection from "../Components/SearchSection";
-
 import RatingComponent from "../Components/ratings";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import InfoColumn from "../Components/InfoColumn";
 import AddressInfo from "../Components/Address";
 import UserReview from "../Components/UserReview";
 import ProductCards from "../Components/ProductCards";
-
-
+import { Link } from "react-router-dom";
 import Footer from "../Components/Footer";
 import { useParams } from 'react-router-dom';
 
@@ -17,15 +15,23 @@ import { useParams } from 'react-router-dom';
 
 
 function ProductDetails({ products }) {
-    const { id } = useParams(); 
+    const { id } = useParams();
     console.log("Extracted ID:", id);
-    
+
     const selectedProduct = products.find((item) => item.id === parseInt(id))
     if (!selectedProduct) {
         console.log("No product found for id:", id);
-        return <h4>Product not found</h4>;
-      }
-      
+        return <h4>Product not found</h4>
+    }
+
+    const handleRentClick = (e) => {
+        e.stopPropagation();
+        console.log(`Navigating to /rentalrequest/${selectedProduct.id}`);
+
+        navigate(`/rentalrequest/${selectedProduct.id}`);
+    };
+
+
     return (
         <div>
             <Header />
@@ -47,8 +53,13 @@ function ProductDetails({ products }) {
                         <p id="owner">E company name - Owned by seller name</p>
                         <RatingComponent />
                         <p className="mt-2">{selectedProduct.description}</p>
-                        <div className="butbuttons d-flex gap-2">
-                            <button type="button" className="btn btn-dark">Rent now</button>
+                        <h4 className="Price">{selectedProduct.price}</h4>
+                        <div className="butbuttons d-flex gap-2 mt-2">
+
+                            <button type="button"
+                                onClick={handleRentClick}
+                                className="btn btn-dark">Rent now</button>
+
                             <button type="button" className="btn btn-outline-dark">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-bag"
                                     viewBox="0 0 16 16">

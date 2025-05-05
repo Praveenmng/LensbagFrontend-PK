@@ -12,7 +12,7 @@ function YourStore() {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/products"); // Adjust if your port/route is different
+      const res = await fetch("http://localhost:5000/api/products"); 
       const data = await res.json();
       setProducts(data);
     } catch (error) {

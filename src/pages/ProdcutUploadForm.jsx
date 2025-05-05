@@ -8,6 +8,7 @@ function ProductUploadForm() {
   const [product, setProduct] = useState({
     productName: "",
     description: "",
+    price:"",
     type: "",
     city: "",
     state: "",
@@ -23,7 +24,7 @@ function ProductUploadForm() {
 
   function handleImage(event) {
     const file = event.target.files[0];
-    const imageURL = URL.createObjectURL(file); // For preview only
+    const imageURL = URL.createObjectURL(file); 
     setProduct({ ...product, preview: imageURL });
   }
 
@@ -70,6 +71,7 @@ function ProductUploadForm() {
         <input name="description" placeholder="Description" onChange={handleChange} value={product.description} className="form-control mb-2" />
         <input name="type" placeholder="Type" onChange={handleChange} value={product.type} className="form-control mb-2" />
         <input name="city" placeholder="City" onChange={handleChange} value={product.city} className="form-control mb-2" />
+        <input name="Pricwe" placeholder="Price" onChange={handleChange} value={product.price} className="form-control mb-2" />
         <input name="state" placeholder="State" onChange={handleChange} value={product.state} className="form-control mb-2" />
         <input name="zip" placeholder="Zip" onChange={handleChange} value={product.zip} className="form-control mb-2" />
         <input type="date" name="fromDate" onChange={handleChange} value={product.fromDate} className="form-control mb-2" />

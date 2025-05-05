@@ -14,30 +14,35 @@ import ProductUploadForm from "./pages/ProdcutUploadForm";
 import Wishlist from "./pages/Wishlist";
 import ProfileSettings from "./pages/ProfileSettings"
 import YourStore from "./pages/YourStore";
+import RentalRequest from "./pages/RentalRequest";
 
 const products = [
   {
     id:11,
     image: Sony,
     title: "Sony DSLR M3",
+    price:"Rs.1000/day",
     description: "Capture stunning moments with professional clarity.",
   },
   {
     id:12,
     image: Nikon,
     title: "Nikon Full Frame",
+    price:"Rs.1000/day",
     description: "Capture stunning moments with professional clarity.",
   },
   {
     id:13,
     image: Lumix,
     title: "Lumix DSLR M2",
+    price:"Rs.1000/day",
     description: "Capture stunning moments with professional clarity.",
   },
   {
     id:14,
     image: CanaonCINIE,
     title: "Canon CINIE",
+    price:"Rs.1000/day",
     description: "Capture stunning moments with professional clarity.",
   },
 
@@ -60,6 +65,7 @@ function App() {
           <Route path="/wishlist" element={<Wishlist products={products}/>}/>
           <Route path="/profilesettings" element ={<ProfileSettings/>}/>
           <Route path="/yourstore" element={<YourStore/>}/>
+          <Route path="/rentalrequest/:id" element={<RentalRequest products={products}/>}/>
         </Routes>
       </Router>
     );

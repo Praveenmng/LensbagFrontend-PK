@@ -1,5 +1,4 @@
 import React from "react";
-
 import { useNavigate } from 'react-router-dom';
 import LikeButton from "../assets/Vector.png"
 import CartButton from "../assets/mdi-light_cart.png"
@@ -15,6 +14,16 @@ function ProductCards(props) {
         console.log("Navigating to product ID:", props.id);
         console.log("Generated URL:", `/productdetails/${props.id}`);
         navigate(`/productdetails/${props.id}`);
+        
+
+    };
+    const handleRentClick = (e) => {
+
+      
+        e.stopPropagation();
+        console.log("Navigating to product ID:", props.id);
+        console.log("Generated URL:", `/rentalrequest/${props.id}`);
+        navigate(`/rentalrequest/${props.id}`);
         
 
     };
@@ -39,9 +48,11 @@ function ProductCards(props) {
                 <button
                     className="btn btn-primary"
                     style={{ borderColor: "black", backgroundColor: "black" }}
+                    onClick={handleRentClick}
                 >
                     Rent now
                 </button>
+                
               
             
             <img src={LikeButton} id="likebutton" alt="Like" />
