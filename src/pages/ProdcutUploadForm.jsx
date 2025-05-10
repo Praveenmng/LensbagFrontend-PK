@@ -28,25 +28,22 @@ function ProductUploadForm() {
     setProduct({ ...product, preview: imageURL });
   }
 
-  const handleUpload = async () => {
-    try {
-      const res = await fetch("http://localhost:5000/api/products", {
-        method: "POST",
+  function handleUpload() {
+    axios
+      .post("http://localhost:5000/api/products", product, {
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(product)
-      });
-
-      if (res.ok) {
-        navigate("/yourstore");
-      } else {
+      })
+      .then(function (response) {
+        console.log("Product uploaded successfully:", response.data);
+        navigate("/yourstore"); // Ensure navigate is properly imported
+      })
+      .catch(function (error) {
+        console.error("Error uploading product:", error);
         alert("Failed to upload product");
-      }
-    } catch (err) {
-      console.error("Error uploading product:", err);
-    }
-  };
+      });
+  }
 
   return (
     <div>
@@ -71,7 +68,7 @@ function ProductUploadForm() {
         <input name="description" placeholder="Description" onChange={handleChange} value={product.description} className="form-control mb-2" />
         <input name="type" placeholder="Type" onChange={handleChange} value={product.type} className="form-control mb-2" />
         <input name="city" placeholder="City" onChange={handleChange} value={product.city} className="form-control mb-2" />
-        <input name="Pricwe" placeholder="Price" onChange={handleChange} value={product.price} className="form-control mb-2" />
+        <input name="price" placeholder="Price" onChange={handleChange} value={product.price} className="form-control mb-2" />
         <input name="state" placeholder="State" onChange={handleChange} value={product.state} className="form-control mb-2" />
         <input name="zip" placeholder="Zip" onChange={handleChange} value={product.zip} className="form-control mb-2" />
         <input type="date" name="fromDate" onChange={handleChange} value={product.fromDate} className="form-control mb-2" />

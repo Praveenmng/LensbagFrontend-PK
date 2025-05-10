@@ -1,13 +1,14 @@
 import React, { useState } from "react";
+import axios from "axios";
 import EditForm from "../Components/EditForm";
 import Header from "../Components/Header";
 import ToggleSwitch from "../Components/ToggleSwitch";
-import { Form, Container, Row, Col } from "react-bootstrap";
-
+import { Form, Container, Row, Col, Button } from "react-bootstrap";
 import RentalPreferenceForm from "../Components/RentalPreference";
-import Footer from "../Components/Footer"
+import Footer from "../Components/Footer";
 
 function ProfileSettings() {
+  const userId = 1; 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -15,8 +16,40 @@ function ProfileSettings() {
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
   const [pincode, setPincode] = useState("");
-  const [newPassword, setNewPassword] = useState("")
-  const [confirm, setConfirm] = useState("")
+  const [newPassword, setNewPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const formData = {
+      username,
+      name,
+      phone_number: phone,
+      city,
+      address,
+      zip: pincode,
+      password: newPassword,
+    };
+
+    // Remove empty fields
+    Object.keys(formData).forEach((key) => {
+      if (formData[key] === "") {
+        delete formData[key];
+      }
+    });
+
+    axios
+      .patch(`http://localhost:5000/updateProfile/${userId}`, formData)
+      .then(function (response) {
+        alert("Profile updated successfully!");
+        console.log("Update response:", response.data);
+      })
+      .catch(function (error) {
+        alert("Error updating profile.");
+        console.error("Update error:", error.response || error.message);
+      });
+  }
 
   return (
     <div>
@@ -25,7 +58,7 @@ function ProfileSettings() {
         <Row className="justify-content-center">
           <Col xs={12} md={8} lg={6}>
             <h3>Profile</h3>
-            <Form>
+            <Form onSubmit={handleSubmit}>
               <EditForm label="Username" value={username} setValue={setUsername} />
               <EditForm label="Email" value={email} setValue={setEmail} />
               <EditForm label="Name" value={name} setValue={setName} />
@@ -37,18 +70,23 @@ function ProfileSettings() {
           </Col>
         </Row>
       </Container>
+
       <Container className="mt-2">
         <Row className="justify-content-center">
           <Col xs={12} md={8} lg={6}>
             <h3>Rental Preferences</h3>
             <Form>
-              <RentalPreferenceForm label="Default Pickup Address" value={username} setValue={setUsername} />
-              <ToggleSwitch label="Enable Pickup Location"/>
+              <RentalPreferenceForm
+                label="Default Pickup Address"
+                value={username}
+                setValue={setUsername}
+              />
+              <ToggleSwitch label="Enable Pickup Location" />
             </Form>
-
           </Col>
         </Row>
       </Container>
+
       <Container className="mt-2">
         <Row className="justify-content-center">
           <Col xs={12} md={8} lg={6}>
@@ -60,29 +98,30 @@ function ProfileSettings() {
               </Form.Group>
               <EditForm label="New Password" value={newPassword} setValue={setNewPassword} />
               <EditForm label="Confirm New Password" value={confirm} setValue={setConfirm} />
-
             </Form>
-
           </Col>
         </Row>
       </Container>
+
       <Container className="mt-2">
         <Row className="justify-content-center">
           <Col xs={12} md={8} lg={6}>
             <h3>Notifications</h3>
             <Form>
-              
-              <ToggleSwitch label="Notifications on Rental Alerts"/>
-              <ToggleSwitch label="Notification on Approval"/>
-              <ToggleSwitch label="Notify on offers  nearby"/>
+              <ToggleSwitch label="Notifications on Rental Alerts" />
+              <ToggleSwitch label="Notification on Approval" />
+              <ToggleSwitch label="Notify on offers nearby" />
+              <div className="d-flex justify-content-end mt-3">
+                <Button variant="primary" type="submit" onClick={handleSubmit}>
+                  Save Changes
+                </Button>
+              </div>
             </Form>
           </Col>
         </Row>
       </Container>
-      <Footer/>
 
-
-
+      <Footer />
     </div>
   );
 }

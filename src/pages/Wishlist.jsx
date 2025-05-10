@@ -13,7 +13,7 @@ function Wishlist({products}){
   <div>
     <Header/>
     <div class="container-fluid">
-          <span class="navbar-brand mb-0 h1">Wishlist</span>
+          <span class="navbar-brand mb-0 h1">Your Bag</span>
         </div>
         <SearchSection/>
         {products.map((product, index) => (

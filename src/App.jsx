@@ -16,6 +16,8 @@ import ProfileSettings from "./pages/ProfileSettings"
 import YourStore from "./pages/YourStore";
 import RentalRequest from "./pages/RentalRequest";
 
+
+
 const products = [
   {
     id:11,
@@ -66,6 +68,7 @@ function App() {
           <Route path="/profilesettings" element ={<ProfileSettings/>}/>
           <Route path="/yourstore" element={<YourStore/>}/>
           <Route path="/rentalrequest/:id" element={<RentalRequest products={products}/>}/>
+       
         </Routes>
       </Router>
     );

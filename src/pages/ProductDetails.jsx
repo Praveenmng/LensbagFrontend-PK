@@ -7,7 +7,7 @@ import InfoColumn from "../Components/InfoColumn";
 import AddressInfo from "../Components/Address";
 import UserReview from "../Components/UserReview";
 import ProductCards from "../Components/ProductCards";
-import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import Footer from "../Components/Footer";
 import { useParams } from 'react-router-dom';
 
@@ -15,6 +15,7 @@ import { useParams } from 'react-router-dom';
 
 
 function ProductDetails({ products }) {
+    const navigate=useNavigate();
     const { id } = useParams();
     console.log("Extracted ID:", id);
 

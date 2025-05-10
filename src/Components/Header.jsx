@@ -35,7 +35,7 @@ function Header() {
       <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
         <li><Link to="/Home" className="nav-link px-2 link-secondary">Home</Link></li>
         <li><Link to="/products" className="nav-link px-2 link-secondary">Products</Link></li>
-        <li><Link to="/wishlist" href="#" className="nav-link px-2 link-secondary">Wishlist</Link></li>
+        <li><Link to="/wishlist" href="#" className="nav-link px-2 link-secondary">Bag</Link></li>
         <li><Link to="/productuploadform" className="nav-link px-2 link-secondary">Your store</Link></li>
       </ul>
       <div className="col-md-3 text-end">
