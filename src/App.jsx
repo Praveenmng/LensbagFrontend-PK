@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from "./pages/LoginPage";
-import Signup from "./pages/Signup";
+import Signup from "./pages/SignUp";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
 import ProductDetails from "./pages/ProductDetails";
@@ -18,33 +18,34 @@ import RentalRequest from "./pages/RentalRequest";
 
 
 
+
 const products = [
   {
-    id:11,
+    id: 11,
     image: Sony,
     title: "Sony DSLR M3",
-    price:"Rs.1000/day",
+    price: "Rs.1000/day",
     description: "Capture stunning moments with professional clarity.",
   },
   {
-    id:12,
+    id: 12,
     image: Nikon,
     title: "Nikon Full Frame",
-    price:"Rs.1000/day",
+    price: "Rs.1000/day",
     description: "Capture stunning moments with professional clarity.",
   },
   {
-    id:13,
+    id: 13,
     image: Lumix,
     title: "Lumix DSLR M2",
-    price:"Rs.1000/day",
+    price: "Rs.1000/day",
     description: "Capture stunning moments with professional clarity.",
   },
   {
-    id:14,
+    id: 14,
     image: CanaonCINIE,
     title: "Canon CINIE",
-    price:"Rs.1000/day",
+    price: "Rs.1000/day",
     description: "Capture stunning moments with professional clarity.",
   },
 
@@ -52,25 +53,30 @@ const products = [
 
 
 function App() {
-    return (
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home products={products}/>} />
-          <Route path="/home" element={<Home products={products}/>}/>
-          <Route path="/products" element={<Products products={products} />} />
-          <Route path="/login" element={<LoginPage/>}/>
-          <Route path="/signUp" element={<Signup/>}/>
+  return (
 
-          <Route path="/productdetails/:id" element={<ProductDetails products={products} />} />
-          <Route path ="/ecompany" element={<Ecompany/>}/> 
-           <Route path="/productuploadform" element={<ProductUploadForm/>}/>
-          <Route path="/wishlist" element={<Wishlist products={products}/>}/>
-          <Route path="/profilesettings" element ={<ProfileSettings/>}/>
-          <Route path="/yourstore" element={<YourStore/>}/>
-          <Route path="/rentalrequest/:id" element={<RentalRequest products={products}/>}/>
-       
-        </Routes>
-      </Router>
-    );
-  }
+
+      <Routes>
+
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signUp" element={<Signup />} />
+
+
+        <Route path="/" element={<Home products={products} />} />
+        <Route path="/home" element={<Home products={products} />} />
+        <Route path="/products" element={<Products products={products} />} />
+
+        <Route path="/productdetails/:id" element={<ProductDetails products={products} />} />
+        <Route path="/ecompany" element={<Ecompany />} />
+        <Route path="/productuploadform" element={<ProductUploadForm />} />
+        <Route path="/wishlist" element={<Wishlist products={products} />} />
+        <Route path="/profilesettings" element={<ProfileSettings />} />
+        <Route path="/yourstore" element={<YourStore />} />
+        <Route path="/rentalrequest/:id" element={<RentalRequest products={products} />} />
+
+      </Routes>
+  
+
+  );
+}
 export default App;

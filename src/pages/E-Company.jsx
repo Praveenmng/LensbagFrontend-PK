@@ -14,6 +14,37 @@ function Ecompany() {
     const [city, setCity] = useState();
     const [pincode, setPincode] =useState();
 
+    
+    function handleSubmit(event) {
+
+        event.preventDefault();
+        const ecomp={
+            fname,
+            lname,
+            EcompanyName,
+            selectedItems,
+            phoneNumber,
+            address,
+            city,
+            pincode,
+            user_id:userId
+        }
+        
+        axios.post("api/user/ecompany",ecomp)
+        .then(function(response){
+            console.log("Product Uploaded successful:", response.data);
+            navigate("/youstore");
+
+        })
+        .catch(function (error) {
+            console.error("Error during signup:", error);
+            alert("Signup failed. Please try again.");
+          });
+
+   
+    }
+
+
 
     function handleChange(event) {
         const { id, checked } = event.target;
@@ -47,10 +78,7 @@ function Ecompany() {
         setPincode(event.target.value)
     }
 
-    function handleSubmit() {
     
-    }
-
     return (
         
         <div>

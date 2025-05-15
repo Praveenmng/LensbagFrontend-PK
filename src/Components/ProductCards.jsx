@@ -7,6 +7,19 @@ function ProductCards(props) {
 
     const navigate = useNavigate(); 
 
+    // const [product, setProduct] = useState(null);
+
+    // useEffect(() => {
+    //     axios
+    //         .get(`http://localhost:5000/api/products/${id}`)
+    //         .then((response) => {
+    //             setProduct(response.data);
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error fetching product data:", error);
+    //         });
+    // }, [id]);
+
     const handleClick = () => {
 
       

@@ -15,7 +15,7 @@ function ProductUploadForm() {
     zip: "",
     fromDate: "",
     toDate: "",
-    preview: ""
+    preview_imgURL: ""
   });
 
   function handleChange(e) {
@@ -30,7 +30,7 @@ function ProductUploadForm() {
 
   function handleUpload() {
     axios
-      .post("http://localhost:5000/api/products", product, {
+      .post("/api/user/products", product, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -55,7 +55,7 @@ function ProductUploadForm() {
         <div className="mb-3 text-center">
           <div style={{ width: "200px", height: "200px", border: "1px solid #ccc", margin: "0 auto" }}>
             {product.preview ? (
-              <img src={product.preview} alt="Preview" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <img src={product.preview_imgURL} alt="Preview" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             ) : (
               <span>No image uploaded</span>
             )}

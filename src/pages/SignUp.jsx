@@ -3,14 +3,23 @@ import axios from "axios";
 import LoginCover from "../assets/signupimg.png";
 import Logo from "../assets/logo.png";
 import styles from "../signin.module.css";
+import { useNavigate } from 'react-router-dom';
+import { useUser } from "../context/UserContext"
+
 
 function Signup() {
-  const [username, setUsername] = useState("");
+
+  const { setLogin, setUserName,setUserId } = useUser(); //setting global
+  const navigate = useNavigate();
+  
+  const [username, setUsername] = useState("")
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [city, setCity] = useState("");
   const [zip, setZip] = useState("");
   const [state, setState] = useState("");
+
+ 
 
   function handleEmail(event) {
     setEmail(event.target.value);
@@ -37,7 +46,7 @@ function Signup() {
   }
 
   function handleSubmit(event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
 
     const userData = {
       email,
@@ -52,7 +61,14 @@ function Signup() {
       .post("/api/users/register", userData)
       .then(function (response) {
         console.log("Signup successful:", response.data);
+
+
+        setLogin(true);
+        setUserName(response.data.username);
+        setUserId(response.data.user_id);
         alert("Signup successful!");
+        navigate("/home");
+
       })
       .catch(function (error) {
         console.error("Error during signup:", error);
