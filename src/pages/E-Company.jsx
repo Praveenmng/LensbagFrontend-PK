@@ -1,8 +1,11 @@
 import React, { useState } from "react"
-
+import { useUser } from "../context/UserContext";
 import styles from "../profile.module.css"
 import profileimage from "../assets/eCompanyPic.png";
 import logo from "../assets/logo.png"
+import axios from "axios";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Ecompany() {
     const [fname, setfname] = useState();
@@ -13,32 +16,61 @@ function Ecompany() {
     const [address, setAddress] = useState();
     const [city, setCity] = useState();
     const [pincode, setPincode] =useState();
-
     
+    const navigate=useNavigate();
+    const { userId } = useUser();
+    const [loading, setLoading] = useState(true);
+
+  
+    useEffect(() => {
+        if (!userId) {
+          alert("You must be logged in.");
+          navigate("/login");
+          return;
+        }
+    
+        axios
+          .get(`/api/user/ecompany/check/${userId}`)
+          .then((response) => {
+            if (response.data.exists) {
+              alert("You have already registered a company.");
+              navigate("/yourstore");
+            } else {
+              setLoading(false); // <-- DONE CHECKING, SHOW PAGE
+            }
+          })
+          .catch((error) => {
+            console.error("Error checking company status:", error);
+            setLoading(false); // still allow page in case of error
+          });
+      }, [userId]);
+    
+      if (loading) return <p>Checking company status...</p>;
+
     function handleSubmit(event) {
 
         event.preventDefault();
-        const ecomp={
-            fname,
-            lname,
-            EcompanyName,
-            selectedItems,
-            phoneNumber,
+        const ecomp = {
+            first_name: fname,
+            last_name: lname,
+            ecompany_name: EcompanyName,
+            available_products: selectedItems,
+            phone_number: phoneNumber,
             address,
             city,
-            pincode,
-            user_id:userId
-        }
-        
+            zip: pincode,
+            user_id: userId
+          };
+          
         axios.post("api/user/ecompany",ecomp)
         .then(function(response){
-            console.log("Product Uploaded successful:", response.data);
-            navigate("/youstore");
+            console.log("Ecompany Registration successful:", response.data);
+            navigate("/yourstore");
 
         })
         .catch(function (error) {
-            console.error("Error during signup:", error);
-            alert("Signup failed. Please try again.");
+            console.error("Error during Ecompany Registration:", error);
+            alert("Ecompany Registration Failed. Please try again.");
           });
 
    
@@ -184,12 +216,12 @@ function Ecompany() {
 
                             <div className="mb-3">
                                 <label htmlFor="City" className="form-label">City</label>
-                                <input className="form-control" onChange={handleCity} value={city} type="text"  aria-label="readonly input example" readOnly />
+                                <input className="form-control" onChange={handleCity} value={city} type="text" required />
                             </div>
 
                             <div className="mb-3">
                                 <label htmlFor="pincode" className="form-label">Pincode</label>
-                                <input className="form-control" onChange={handlePincode} value={pincode} type="text"  aria-label="readonly input example" readOnly />
+                                <input className="form-control" onChange={handlePincode} value={pincode} type="text" required />
                             </div>
 
                             {/* <!-- Submit Button --> */}

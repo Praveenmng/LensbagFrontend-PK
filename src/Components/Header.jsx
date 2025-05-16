@@ -2,16 +2,16 @@ import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from '../assets/logo.png';
 import ProfileDropDown from "./ProfileDropdown";
-import axios from 'axios';
+import axios from 'axios';  
 import { Link } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 
 function Header() {
-  const { login, userName, userId, setLogin, setUserName,SetUserId } = useUser();
+  const { login, userName, userId, setLogin, setUserName,setUserId } = useUser();
 
   useEffect(() => {
     axios.get("/api/user/status")
-      .then(response => {
+      .then(response => { 
         console.log("User status response:", response.data);
         if (response.data.isLogged && response.data.username) {
           setLogin(true);
@@ -26,7 +26,7 @@ function Header() {
       .then(() => {
         setLogin(false);
         setUserName("");
-        SetUserId("");
+        setUserId(null);
       })
       .catch(error => console.error("Logout failed:", error));
   }

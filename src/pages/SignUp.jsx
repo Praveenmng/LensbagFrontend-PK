@@ -66,6 +66,7 @@ function Signup() {
         setLogin(true);
         setUserName(response.data.username);
         setUserId(response.data.user_id);
+        console.log("User Id: "+response.data.user_id)
         alert("Signup successful!");
         navigate("/home");
 

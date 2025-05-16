@@ -2,10 +2,23 @@ import React,{useState} from "react"
 import styles from "../login.module.css"
 import LoginCover from "../assets/signupimg.png";
 import Logo from "../assets/logo.png"
+import axios from "axios"
+import { useNavigate } from 'react-router-dom';
+import { useUser } from "../context/UserContext"
+
+
+
 
 function LoginPage() {
+
+   const { setLogin, setUserName,setUserId } = useUser(); //setting global
+  const navigate=useNavigate();
+
+
+
 const [email,setEmail]=useState("")
 const [password,setPassword]=useState("")
+
 
 function handleEmail(event){
 setEmail(event.target.value);
@@ -13,16 +26,35 @@ setEmail(event.target.value);
 function handlePassword(event){
   setPassword(event.target.value);
 }
-function handlesubmit(){
- 
-    const username = email;
-    const passcode=password;
-    localStorage.setItem("username", email);
-    localStorage.setItem("passcode",password);
-    localStorage.setItem("isLogged",true);  
-    window.location.href = "/home"; 
+function handlesubmit(event){
 
-}
+  event.preventDefault();
+ 
+  const log={
+    email,
+    password
+  };
+ 
+
+axios
+      .post("/api/users/login",log)
+      .then(function (response) {
+        console.log("Login successful:", response.data);
+        console.log(log); 
+   
+        setLogin(true);
+        setUserName(response.data.username);
+        setUserId(response.data.user_id);
+        console.log("User Id: "+response.data.user_id)
+        alert("Login successful!");
+        navigate("/home");
+
+      })
+      .catch(function (error) {
+        console.error("Error during login:", error);
+        alert("Login failed. Please try again.");
+      });
+    }
 
     return (
       <div className={styles.container}>
