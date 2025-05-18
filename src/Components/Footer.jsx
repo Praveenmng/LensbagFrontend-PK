@@ -12,7 +12,7 @@ function Footer(){
         <li className="nav-item"><a href="#" className="nav-link px-2 text-body-secondary">FAQs</a></li>
         <li className="nav-item"><a href="#" className="nav-link px-2 text-body-secondary">About</a></li>
       </ul>
-      <p className="text-center text-body-secondary">© 2025 Company, Founder & Developer Praveen Kumar</p>
+      <p className="text-center text-body-secondary">© 2025 Company, A Praveen Kumar Production</p>
     </footer>
   </div>
   )

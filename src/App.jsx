@@ -15,7 +15,7 @@ import Wishlist from "./pages/Wishlist";
 import ProfileSettings from "./pages/ProfileSettings"
 import YourStore from "./pages/YourStore";
 import RentalRequest from "./pages/RentalRequest";
-
+import YourBag from "./pages/YourBag";
 
 
 
@@ -73,7 +73,7 @@ function App() {
         <Route path="/profilesettings" element={<ProfileSettings />} />
         <Route path="/yourstore" element={<YourStore />} />
         <Route path="/rentalrequest/:id" element={<RentalRequest products={products} />} />
-
+        <Route path ="/yourbag" element ={<YourBag/>}/>
       </Routes>
   
 

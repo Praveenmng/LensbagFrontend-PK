@@ -19,7 +19,9 @@ function Signup() {
   const [zip, setZip] = useState("");
   const [state, setState] = useState("");
 
- 
+ function handleNavigate(){
+  navigate("/login");
+ }
 
   function handleEmail(event) {
     setEmail(event.target.value);
@@ -163,11 +165,13 @@ function Signup() {
             required
           />
 
-          <div className="d-flex justify-content-center">
+          <div className="d-flex justify-content-center mt-4">
             <button className="btn btn-dark w-100" type="submit" onClick={handleSubmit}>
               Sign Up
             </button>
+          
           </div>
+          <p className="mt-4" style={{textAlign:"center", color:"GrayText"}} onClick={handleNavigate}>Already have an account?</p>
         </div>
       </div>
     </div>

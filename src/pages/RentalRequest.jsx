@@ -42,7 +42,7 @@ function RentalRequest({ products }) {
             }
 
             try {
-                const res = await axios.post('http://localhost:5000/api/rental-requests', {
+                const res = await axios.post('/api/rental-requests', {
                     product_id: selectedRentProduct.id,
                     renter_id: 1, // This should be the actual logged-in user ID
                     requested_start_date: date.fromDate,

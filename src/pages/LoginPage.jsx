@@ -19,6 +19,9 @@ function LoginPage() {
 const [email,setEmail]=useState("")
 const [password,setPassword]=useState("")
 
+function handleNavigate(){
+  navigate("/signUp");
+}
 
 function handleEmail(event){
 setEmail(event.target.value);
@@ -120,7 +123,9 @@ axios
              >
               Login
             </button>
+           
           </div>
+          <p className="mt-4" style={{textAlign:"center", color:"GrayText"}} onClick={handleNavigate}>Create your account</p>
         </div>
       </div>
     );
