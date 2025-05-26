@@ -16,7 +16,8 @@ import ProfileSettings from "./pages/ProfileSettings"
 import YourStore from "./pages/YourStore";
 import RentalRequest from "./pages/RentalRequest";
 import YourBag from "./pages/YourBag";
-
+import { useUser } from "./context/UserContext";
+import { useEffect } from "react";
 
 
 const products = [
@@ -53,6 +54,17 @@ const products = [
 
 
 function App() {
+  const {login,userName,userId,hasECompany,ecompanyId}=useUser();
+
+  useEffect(() => {
+    console.log("📌 UserContext status:");
+    console.log("Login:", login);
+    console.log("Username:", userName);
+    console.log("User ID:", userId);
+    console.log("Has ECompany:", hasECompany);
+    console.log("ECompany ID:", ecompanyId);
+  }, [login, userName, userId, hasECompany, ecompanyId]);
+
   return (
 
 

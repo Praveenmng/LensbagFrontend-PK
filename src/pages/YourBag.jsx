@@ -1,10 +1,20 @@
 import React from "react";
 import Header from "../Components/Header";
 import RentedProducts from "../Components/RentedProducts";
+import { useUser } from "../context/UserContext";
+
+
 function YourBag() {
 
+    const {login}=useUser();
 
 
+    useEffect(()=>{
+        if(!login){
+            alert("You have login first to create Ecompany")
+            navigate("/home")
+        }
+    })
 
  
     return (

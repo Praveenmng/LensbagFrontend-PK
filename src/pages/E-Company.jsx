@@ -1,11 +1,11 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useUser } from "../context/UserContext";
 import styles from "../profile.module.css"
 import profileimage from "../assets/eCompanyPic.png";
 import logo from "../assets/logo.png"
 import axios from "axios";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Header from "../Components/Header";
 
 function Ecompany() {
     const [fname, setfname] = useState();
@@ -16,65 +16,50 @@ function Ecompany() {
     const [address, setAddress] = useState();
     const [city, setCity] = useState();
     const [pincode, setPincode] =useState();
-    
     const navigate=useNavigate();
-    const { userId } = useUser();
-    const [loading, setLoading] = useState(true);
+   
+    const { login,userId,hasECompany,setHasECompany,setEcompanyId} = useUser();
+
+    useEffect(()=>{
+        if(!login){
+            alert("You have login first to create Ecompany")
+            navigate("/home")
+        }
+        if(hasECompany){
+            alert("Already Ecompany Registered");
+            navigate("/yourstore")
+        }
+    })
 
   
-    useEffect(() => {
-        if (!userId) {
-          alert("You must be logged in.");
-          navigate("/login");
-          return;
-        }
-    
-        axios
-          .get(`/api/user/ecompany/check/${userId}`)
-          .then((response) => {
-            if (response.data.exists) {
-              alert("You have already registered a company.");
-              navigate("/yourstore");
-            } else {
-              setLoading(false); // <-- DONE CHECKING, SHOW PAGE
-            }
-          })
-          .catch((error) => {
-            console.error("Error checking company status:", error);
-            setLoading(false); // still allow page in case of error
-          });
-      }, [userId]);
-    
-      if (loading) return <p>Checking company status...</p>;
-
-    function handleSubmit(event) {
-
+         function handleSubmit(event) {
         event.preventDefault();
         const ecomp = {
-            first_name: fname,
-            last_name: lname,
-            ecompany_name: EcompanyName,
-            available_products: selectedItems,
-            phone_number: phoneNumber,
-            address,
-            city,
-            zip: pincode,
-            user_id: userId
-          };
-          
-        axios.post("api/user/ecompany",ecomp)
-        .then(function(response){
+          first_name: fname,
+          last_name: lname,
+          ecompany_name: EcompanyName,  // <-- key is ecompany here
+          available_products: selectedItems,
+          phone_number: phoneNumber,
+          address,
+          city,
+          zip: pincode,
+          user_id: userId,
+        };
+      
+      
+        axios.post("api/user/ecompany", ecomp, { withCredentials: true }) // add withCredentials if using sessions
+          .then(function(response){
             console.log("Ecompany Registration successful:", response.data);
-            navigate("/yourstore");
-
-        })
-        .catch(function (error) {
+            setHasECompany(true);
+            setEcompanyId(response.data.id);  // <-- Save ecompany ID here
+            navigate("/productuploadform");
+          })
+          .catch(function (error) {
             console.error("Error during Ecompany Registration:", error);
             alert("Ecompany Registration Failed. Please try again.");
           });
-
-   
-    }
+      }
+      
 
 
 
@@ -114,6 +99,7 @@ function Ecompany() {
     return (
         
         <div>
+            <Header/>
            
             <div className={styles.container} style={{ display: 'flex', gap: '20px', padding: '0' }}>
                 <div className={styles.image}>
@@ -196,7 +182,7 @@ function Ecompany() {
                                     placeholder="Enter Your Phone Number"
                                     pattern="[0-9]{10}"
                                     maxLength="10"
-                                    onCanPlay={handlePhoneNumber}
+                                    onChange={handlePhoneNumber}
                                     value={phoneNumber}
                                     required />
                             </div>

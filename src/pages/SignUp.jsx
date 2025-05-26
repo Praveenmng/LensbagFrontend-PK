@@ -9,7 +9,8 @@ import { useUser } from "../context/UserContext"
 
 function Signup() {
 
-  const { setLogin, setUserName,setUserId } = useUser(); //setting global
+  
+  const { refreshUserStatus } = useUser();
   const navigate = useNavigate();
   
   const [username, setUsername] = useState("")
@@ -60,23 +61,19 @@ function Signup() {
     };
 
     axios
-      .post("/api/users/register", userData)
-      .then(function (response) {
-        console.log("Signup successful:", response.data);
-
-
-        setLogin(true);
-        setUserName(response.data.username);
-        setUserId(response.data.user_id);
-        console.log("User Id: "+response.data.user_id)
-        alert("Signup successful!");
-        navigate("/home");
-
-      })
-      .catch(function (error) {
-        console.error("Error during signup:", error);
-        alert("Signup failed. Please try again.");
-      });
+    .post("/api/users/register", userData, { withCredentials: true }) // Added for session cookie
+    .then(function (response) {
+      console.log("Signup successful:", response.data);
+  
+      refreshUserStatus();
+      console.log("User Id: " + response.data.user_id);
+      alert("Signup successful!");
+      navigate("/home");
+    })
+    .catch(function (error) {
+      console.error("Error during signup:", error);
+      alert("Signup failed. Please try again.");
+    });
   }
 
   return (

@@ -9,40 +9,22 @@ import { useUser } from "../context/UserContext";
 import NotificationDropdown from './Notifications';
 
 function Header() {
-  const { login, userName, userId, setLogin, setUserName, setUserId } = useUser();
+  const { login,userName, refreshUserStatus} = useUser();
 
-  useEffect(() => {
-    axios.get("/api/user/status")
-      .then(response => {
-        console.log("User status response:", response.data);
-        if (response.data.isLogged && response.data.username) {
-          setLogin(true);
-          setUserName(response.data.username);
-          setUserId(response.data.user_id); 
-        } else {
-          setLogin(false);
-          setUserName(null);
-          setUserId(null);
-        }
-      })
-      .catch(error => {
-        console.error("Error fetching user status:", error);
-        setLogin(false);
-        setUserName(null);
-        setUserId(null);
-      });
-  }, []);
+  
+  
   
 
   function handleLogout() {
-    axios.post("/api/users/logout", { username: userName })  // send username only
+    axios.post("/api/users/logout", {}, { withCredentials: true })
       .then(() => {
-        console.log(`User logged out: username=${userName}`);
-        setLogin(false);
-        setUserName("");
-        setUserId(null);  // optional reset
+        console.log("Logged out successfully");
+        refreshUserStatus();
+        
       })
-      .catch(error => console.error("Logout failed:", error));
+      .catch(err => {
+        console.error("Logout failed:", err);
+      });
   }
   
   return (
@@ -55,7 +37,7 @@ function Header() {
         <li><Link to="/home" className="nav-link px-2 link-secondary">Home</Link></li>
         <li><Link to="/products" className="nav-link px-2 link-secondary">Products</Link></li>
         <li><Link to="/yourbag" className="nav-link px-2 link-secondary">Your Bag</Link></li>
-        <li><Link to="/productuploadform" className="nav-link px-2 link-secondary">Your Store</Link></li>
+        <li><Link to="/yourstore" className="nav-link px-2 link-secondary">Your Store</Link></li>
       </ul>
 
       <div className="col-md-3 text-end">

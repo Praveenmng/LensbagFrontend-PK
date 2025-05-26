@@ -4,19 +4,46 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import AddButton from "../assets/Addbt.png";
 import { useNavigate } from 'react-router-dom';
 import ProductCard from "../Components/ProductCards";
+import { useUser } from "../context/UserContext";
+
 
 function YourStore() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { login,hasECompany } = useUser();
 
+  useEffect(() => {
+    if (!login) {
+      alert("You need to login first.");
+      navigate("/home");
+      return;
+    }
+
+    if (!hasECompany) {
+      alert("You need to register your Ecompany.");
+      navigate("/ecompany");
+      return;
+    }
+
+    // If both true, stay here (YourStore or wherever this component is used)
+  }, [login, hasECompany, navigate]);
+
+  
+
+ 
   const fetchProducts = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/products"); 
+      const res = await fetch("http://localhost:5000/api/products");
+      if (!res.ok) {
+        setProducts([]);
+        return;
+      }
       const data = await res.json();
-      setProducts(data);
+      setProducts(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Error fetching products:", error);
+      setProducts([]);
     } finally {
       setLoading(false);
     }

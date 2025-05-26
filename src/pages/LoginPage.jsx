@@ -11,7 +11,7 @@ import { useUser } from "../context/UserContext"
 
 function LoginPage() {
 
-   const { setLogin, setUserName,setUserId } = useUser(); //setting global
+  const { refreshUserStatus } = useUser();
   const navigate=useNavigate();
 
 
@@ -39,25 +39,18 @@ function handlesubmit(event){
   };
  
 
-axios
-      .post("/api/users/login",log)
-      .then(function (response) {
-        console.log("Login successful:", response.data);
-        console.log(log); 
-   
-        setLogin(true);
-        setUserName(response.data.username);
-        setUserId(response.data.user_id);
-        console.log("User Id: "+response.data.user_id)
-        alert("Login successful!");
-        navigate("/home");
+  axios.post("/api/users/login", log, { withCredentials: true })
+  .then((res) => {
+    refreshUserStatus(); // ✅ Triggers fresh context update immediately
+    navigate("/home");
+  })
+  .catch((err) => {
+    console.error(err);
+    alert("Login failed");
+  });
 
-      })
-      .catch(function (error) {
-        console.error("Error during login:", error);
-        alert("Login failed. Please try again.");
-      });
-    }
+  };
+ 
 
     return (
       <div className={styles.container}>
