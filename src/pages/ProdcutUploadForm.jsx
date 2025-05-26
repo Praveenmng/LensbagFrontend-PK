@@ -7,7 +7,9 @@ import { useUser } from "../context/UserContext";
 
 function ProductUploadForm() {
 
-  const {hasECompany}=useUser();
+  const {hasECompany,ecompanyId}=useUser();
+  console.log("From ProductUploadForm - hasECompany:", hasECompany, "ecompanyId:", ecompanyId);
+
   const navigate = useNavigate();
   useEffect(()=>{
     if(!hasECompany){
@@ -17,6 +19,7 @@ function ProductUploadForm() {
   })
 
   const [product, setProduct] = useState({
+    ecompany_id:ecompanyId,
     productName: "",
     description: "",
     price: "",
@@ -25,7 +28,8 @@ function ProductUploadForm() {
     state: "",
     zip: "",
     fromDate: "",
-    toDate: "",
+    toDate: ""
+    
   });
 
   const [file, setFile] = useState(null);
@@ -45,6 +49,7 @@ function ProductUploadForm() {
   function handleUpload() {
     const formData = new FormData();
     formData.append("image", file);
+    formData.append("ecompanyId", ecompanyId); 
     formData.append("productName", product.productName);
     formData.append("description", product.description);
     formData.append("price", product.price);
@@ -64,6 +69,7 @@ function ProductUploadForm() {
       })
       .then(function (response) {
         console.log("Product uploaded successfully:", response.data);
+        alert("Product Uploaded Successfully");
         navigate("/yourstore");
       })
       .catch(function (error) {
