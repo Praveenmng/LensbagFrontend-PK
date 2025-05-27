@@ -7,19 +7,19 @@ import { useUser } from "../context/UserContext";
 
 function ProductUploadForm() {
 
-  const {hasECompany,ecompanyId}=useUser();
+  const { hasECompany, ecompanyId } = useUser();
   console.log("From ProductUploadForm - hasECompany:", hasECompany, "ecompanyId:", ecompanyId);
 
   const navigate = useNavigate();
-  useEffect(()=>{
-    if(!hasECompany){
+  useEffect(() => {
+    if (!hasECompany) {
       alert("You have to register Ecompany");
       navigate("/ecompany");
     }
   })
 
   const [product, setProduct] = useState({
-    ecompany_id:ecompanyId,
+    ecompany_id: ecompanyId,
     productName: "",
     description: "",
     price: "",
@@ -29,7 +29,7 @@ function ProductUploadForm() {
     zip: "",
     fromDate: "",
     toDate: ""
-    
+
   });
 
   const [file, setFile] = useState(null);
@@ -49,7 +49,7 @@ function ProductUploadForm() {
   function handleUpload() {
     const formData = new FormData();
     formData.append("image", file);
-    formData.append("ecompanyId", ecompanyId); 
+    formData.append("ecompanyId", ecompanyId);
     formData.append("productName", product.productName);
     formData.append("description", product.description);
     formData.append("price", product.price);
@@ -105,7 +105,7 @@ function ProductUploadForm() {
             )}
           </div>
           <input
-            className="form-control mt-2"
+            className="form-control mt-2 mb-2"
             type="file"
             name="image" // <-- Add this line!
             accept="image/*"
@@ -120,13 +120,16 @@ function ProductUploadForm() {
             value={product.productName}
             className="form-control mb-2"
           />
-          <input
+          <textarea
             name="description"
             placeholder="Description"
             onChange={handleChange}
+            maxLength={250} // or any suitable limit
             value={product.description}
             className="form-control mb-2"
+            style={{ height: "150px", resize: "vertical" }} // height and resizable
           />
+
           <input
             name="type"
             placeholder="Type"
@@ -195,8 +198,8 @@ function ProductUploadForm() {
           </div>
         </div>
       </div>
-      </div>
-      );
+    </div>
+  );
 }
 
-      export default ProductUploadForm;
+export default ProductUploadForm;

@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../Components/Header";
 import RentedProducts from "../Components/RentedProducts";
 import { useUser } from "../context/UserContext";
-
+import { useEffect } from "react";
 
 function YourBag() {
 

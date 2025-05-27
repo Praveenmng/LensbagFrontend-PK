@@ -41,6 +41,7 @@ function handlesubmit(event){
 
   axios.post("/api/users/login", log, { withCredentials: true })
   .then((res) => {
+    console.log("✅ Login response:", res.data);
     refreshUserStatus(); // ✅ Triggers fresh context update immediately
     navigate("/home");
   })
