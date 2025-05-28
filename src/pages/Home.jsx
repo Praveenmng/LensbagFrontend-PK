@@ -7,10 +7,17 @@ import ProductCards from "../Components/ProductCards";
 import "../lensbagstyle.css"
 import InfoSteps from "../Components/InfoSteps";
 import Footer from "../Components/Footer"
+import { useEffect,useState} from "react";
+import axios from "axios";
 
+function Home() {
+  const [products, setProducts] = useState([]);
 
-
-function Home({products}) {
+  useEffect(() => {
+    axios.get("/api/products", { withCredentials: true })
+      .then((res) => setProducts(res.data))
+      .catch((err) => console.error("Error fetching products:", err));
+  }, []);
   
     return (
         <div>
@@ -23,8 +30,8 @@ function Home({products}) {
         <ProductCards
           id={product.id}
           key={index}
-          image={product.image} 
-          title={product.title}
+          image={product.image_url} 
+          title={product.product_name}
           description={product.description}
         />
       ))}
@@ -37,8 +44,8 @@ function Home({products}) {
         <ProductCards
         id={product.id}
           key={index}
-          image={product.image} 
-          title={product.title}
+          image={product.image_url} 
+          title={product.product_name}
           description={product.description}
         />
       ))}

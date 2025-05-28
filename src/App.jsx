@@ -19,7 +19,7 @@ import YourBag from "./pages/YourBag";
 import { useUser } from "./context/UserContext";
 import { useEffect } from "react";
 
-
+// local array for ui
 const products = [
   {
     id: 11,
@@ -76,15 +76,15 @@ function App() {
 
         <Route path="/" element={<Home products={products} />} />
         <Route path="/home" element={<Home products={products} />} />
-        <Route path="/products" element={<Products products={products} />} />
+        <Route path="/products" element={<Products/>} />
 
-        <Route path="/productdetails/:id" element={<ProductDetails products={products} />} />
+        <Route path="/productdetails/:id" element={<ProductDetails />} />
         <Route path="/ecompany" element={<Ecompany />} />
         <Route path="/productuploadform" element={<ProductUploadForm />} />
-        <Route path="/wishlist" element={<Wishlist products={products} />} />
+        <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/profilesettings" element={<ProfileSettings />} />
         <Route path="/yourstore" element={<YourStore />} />
-        <Route path="/rentalrequest/:id" element={<RentalRequest products={products} />} />
+        <Route path="/rentalrequest/:id" element={<RentalRequest />} />
         <Route path ="/yourbag" element ={<YourBag/>}/>
       </Routes>
   
