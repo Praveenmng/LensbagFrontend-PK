@@ -12,7 +12,7 @@ function RentalRequest() {
     const [date, setDate] = useState({ fromDate: "", toDate: "" });
     const [termsAccepted, setTermsAccepted] = useState(false);
 
-    const{userId}=useUser();
+    const{userId,userName}=useUser();
 
        useEffect(() => {
         axios
@@ -37,6 +37,7 @@ function RentalRequest() {
         try {
             await axios.post('/api/rental_requests', {
                 product_id: product.id,
+                requester_name:userName,
                 renter_id: userId, // Replace with actual user ID from context/session
                 requested_start_date: date.fromDate,
                 requested_end_date: date.toDate
