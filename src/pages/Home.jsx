@@ -9,15 +9,22 @@ import InfoSteps from "../Components/InfoSteps";
 import Footer from "../Components/Footer"
 import { useEffect,useState} from "react";
 import axios from "axios";
-
+import { useUser } from "../context/UserContext";
 function Home() {
   const [products, setProducts] = useState([]);
 
+  const {  ecompanyId } = useUser();
+
   useEffect(() => {
-    axios.get("/api/products", { withCredentials: true })
-      .then((res) => setProducts(res.data))
-      .catch((err) => console.error("Error fetching products:", err));
-  }, []);
+    axios.get("/api/products", {
+      params: {
+        excludeEcompanyId: ecompanyId || null
+      },
+      withCredentials: true
+    })
+    .then((res) => setProducts(res.data))
+    .catch((err) => console.error("Error fetching products:", err));
+  }, [ecompanyId]);
   
     return (
         <div>

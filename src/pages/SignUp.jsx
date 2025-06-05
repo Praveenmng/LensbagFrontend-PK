@@ -19,6 +19,7 @@ function Signup() {
   const [city, setCity] = useState("");
   const [zip, setZip] = useState("");
   const [state, setState] = useState("");
+  const [phoneNumber,setPhoneNumber]=useState("");
 
  function handleNavigate(){
   navigate("/login");
@@ -47,7 +48,9 @@ function Signup() {
   function handleZip(event) {
     setZip(event.target.value);
   }
-
+ function handlePhoneNumber(event){
+  setPhoneNumber(event.target.value);
+ }
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -58,6 +61,7 @@ function Signup() {
       city,
       state,
       zip,
+      phoneNumber
     };
 
     axios
@@ -125,6 +129,15 @@ function Signup() {
             className="form-control"
             aria-describedby="passwordHelpBlock"
             onChange={handlePassword}
+            value={password}
+          />
+          <label htmlFor="inputPassword5" className="form-label">Phone Number</label>
+          <input
+            type="text"
+            id="validationDefault03"
+            className="form-control"
+      
+            onChange={handlePhoneNumber}
             value={password}
           />
 

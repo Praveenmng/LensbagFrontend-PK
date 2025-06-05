@@ -12,7 +12,13 @@ function RentalRequest() {
     const [date, setDate] = useState({ fromDate: "", toDate: "" });
     const [termsAccepted, setTermsAccepted] = useState(false);
 
-    const{userId,userName}=useUser();
+    const{userName,ogin}=useUser();
+    useEffect(() => {
+        if (!login) {
+          alert("You have to login first to view your rented products.");
+          navigate("/home");
+        }
+    })
 
        useEffect(() => {
         axios
@@ -37,13 +43,15 @@ function RentalRequest() {
         try {
             await axios.post('/api/rental_requests', {
                 product_id: product.id,
-                requester_name:userName,
-                renter_id: userId, // Replace with actual user ID from context/session
                 requested_start_date: date.fromDate,
-                requested_end_date: date.toDate
-            });
-
-            alert('Rental request sent!');
+                requested_end_date: date.toDate,
+                requester_name: userName
+              }, {
+                withCredentials: true
+              });
+              
+            
+            alert('Rental request sent! Product owner will contact you in a moment');
         } catch (err) {
             console.error('Error sending request:', err);
             alert('Failed to send rental request.');

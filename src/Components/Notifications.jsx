@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useUser } from "../context/UserContext";
+
 import axios from "axios";
 
 function NotificationDropdown() {
-  const { userId } = useUser();
+
   const [notifications, setNotifications] = useState([]);
   const [open, setOpen] = useState(false);
 
@@ -11,17 +11,17 @@ function NotificationDropdown() {
     axios
       .get("/api/notifications", { withCredentials: true })
       .then((res) => setNotifications(res.data))
+
       .catch((err) => console.error(err));
+
   };
 
-  // Fetch notifications on bell icon click
   useEffect(() => {
     if (open) {
       fetchNotifications();
     }
   }, [open]);
 
-  // Auto-fetch every 30 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       fetchNotifications();
@@ -29,13 +29,18 @@ function NotificationDropdown() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleResponse = (notificationId, rentalRequestId, action) => {
+  // Handles both rental and return request responses
+  const handleResponse = (notificationId, rentalRequestId, returnRequestId, action) => {
+    const apiUrl = returnRequestId
+      ? "/api/return_requests/respond"
+      : "/api/rental_requests/respond";
+
+    const payload = returnRequestId
+      ? { notificationId, returnRequestId, action }
+      : { notificationId, rentalRequestId, action };
+
     axios
-      .post(
-        "/api/rental_requests/respond",
-        { notificationId, rentalRequestId, action },
-        { withCredentials: true }
-      )
+      .post(apiUrl, payload, { withCredentials: true })
       .then(() => {
         setNotifications((prev) => prev.filter((n) => n.id !== notificationId));
       })
@@ -44,7 +49,10 @@ function NotificationDropdown() {
 
   return (
     <div className="notification-container position-relative">
-      <button className="btn btn-outline-dark position-relative" onClick={() => setOpen(!open)}>
+      <button
+        className="btn btn-outline-dark position-relative"
+        onClick={() => setOpen(!open)}
+      >
         <i className="bi bi-bell-fill"></i>
         {notifications.length > 0 && (
           <span
@@ -60,7 +68,7 @@ function NotificationDropdown() {
         <div
           className="dropdown-menu show p-3"
           style={{
-            width: "300px",
+            width: "320px",
             maxHeight: "400px",
             overflowY: "auto",
             right: "0",
@@ -73,22 +81,54 @@ function NotificationDropdown() {
           ) : (
             notifications.map((n) => (
               <div key={n.id} className="dropdown-item border-bottom mb-2">
-                <p>
-                  <strong>{n.requester_name}</strong> requested{" "}
-                  <strong>{n.product_name}</strong>
-                </p>
-                <p>
-                  From: {n.requested_start_date} <br />
-                  To: {n.requested_end_date}
-                </p>
+                {/* Show rental request details if available */}
+                <h6>Rental Requests</h6>
+                {n.requested_start_date && (
+                  <>
+                    <p>
+                      <strong>{n.requester_name}</strong> requested{" "}
+                      <strong>{n.product_name}</strong>
+                      <strong><span>Contact:</span>{n.phone_number}</strong>
+                    </p> 
+                    <p>
+                      From: {new Intl.DateTimeFormat('en-IN', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: '2-digit'
+                      }).format(new Date(n.requested_start_date))} <br />
+                      To: {new Intl.DateTimeFormat('en-IN', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: '2-digit'
+                      }).format(new Date(n.requested_end_date))}
+                    </p>
+                  </>
+                )}
+
+                {/* Show return request details if available */}
+                {n.return_request_date && (
+                  <>
+                    <p>
+                      <strong>{n.requester_name}</strong> requested to RETURN{" "}
+                      <strong>{n.product_name}</strong>
+                    </p>
+                    <p>Return requested on:  {new Intl.DateTimeFormat('en-IN', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: '2-digit'
+                      }).format(new Date(n.return_request_date))}</p>
+                  </>
+                )}
+
                 <small className="text-muted">
                   {new Date(n.created_at).toLocaleString()}
                 </small>
+
                 <div className="mt-2 d-flex justify-content-between">
                   <button
                     className="btn btn-sm btn-success"
                     onClick={() =>
-                      handleResponse(n.id, n.rental_request_id, "accepted")
+                      handleResponse(n.id, n.rental_request_id, n.return_request_id, "accepted")
                     }
                   >
                     Accept
@@ -96,7 +136,7 @@ function NotificationDropdown() {
                   <button
                     className="btn btn-sm btn-danger"
                     onClick={() =>
-                      handleResponse(n.id, n.rental_request_id, "denied")
+                      handleResponse(n.id, n.rental_request_id, n.return_request_id, "denied")
                     }
                   >
                     Deny

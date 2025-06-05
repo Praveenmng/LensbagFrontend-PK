@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 function Products() {
-  const { login } = useUser();
+  const { login,ecompanyId } = useUser();
   const navigate = useNavigate();
   
   useEffect(() => {if (!login) {alert("Sign Up or Login to Explore More"); navigate("/home"); }}, [login, navigate]);
@@ -18,10 +18,16 @@ function Products() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios.get("/api/products", { withCredentials: true })
-      .then((res) => setProducts(res.data))
-      .catch((err) => console.error("Error fetching products:", err));
-  }, []);
+    axios.get("/api/products", {
+      params: {
+        excludeEcompanyId: ecompanyId || null
+      },
+      withCredentials: true
+    })
+    .then((res) => setProducts(res.data))
+    .catch((err) => console.error("Error fetching products:", err));
+  }, [ecompanyId]);
+
   return (
     <div>
       <Header />

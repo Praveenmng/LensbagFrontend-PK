@@ -14,7 +14,7 @@ function YourStore() {
   const { login, hasECompany, userId } = useUser();
 
   useEffect(() => {
-    if (!login) {
+    if (!login || !userId) {
       alert("You need to login first.");
       navigate("/home");
       return;
@@ -25,50 +25,64 @@ function YourStore() {
       navigate("/ecompany");
       return;
     }
-    if(!userId){
-      alert("You need to login first.");
-      navigate("/home");
-      return;
-    }
 
-    fetchOwnerProducts(); // Fetch only after checks
+    fetchOwnerProducts();
   }, [login, hasECompany, userId]);
-  console.log(login,userId,hasECompany)
 
- 
   const fetchOwnerProducts = async () => {
     try {
-      console.log("📦 Sending request to fetch owner products");
-  
       const res = await axios.get("/api/owner/products", {
-        withCredentials: true, // 🔑 sends session cookie
+        withCredentials: true,
       });
-  
-      console.log("✅ Response received from backend:");
-      console.log("👉 Status:", res.status);
-      console.log("👉 Data:", res.data);
-  
       setProducts(Array.isArray(res.data) ? res.data : []);
     } catch (error) {
-      console.error("❌ Error fetching owner's products:");
-      if (error.response) {
-        console.error("📍 Server responded with:");
-        console.error("Status:", error.response.status);
-        console.error("Data:", error.response.data);
-        console.error("Headers:", error.response.headers);
-      } else if (error.request) {
-        console.error("📡 Request was made but no response received:");
-        console.error(error.request);
-      } else {
-        console.error("⚠️ Error setting up request:", error.message);
-      }
+      console.error("Error fetching owner's products:", error);
     } finally {
       setLoading(false);
-      console.log("🔄 Finished fetchOwnerProducts execution");
+    }
+  };
+  function handleDelete(productId){
+    if (!window.confirm("Are you sure you want to delete this product?")) return;
+
+    try {
+      axios.delete(`/api/products/${productId}`, {
+        withCredentials: true,
+      });
+  
+      // Remove the product from local state
+      setProducts((prev) => prev.filter((p) => p.id !== productId));
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      alert("Failed to delete product.");
+    }
+  }
+
+  const handleStatusChange = async (productId, newStatus) => {
+    try {
+      await axios.put(
+        `/api/products/${productId}/status`,
+        { status: newStatus },
+        { withCredentials: true }
+      );
+  
+      // Update local state
+      setProducts(prev =>
+        prev.map(p =>
+          p.id === productId
+            ? {
+                ...p,
+                is_available: newStatus === "Published",
+                status: newStatus, // Also update the status in local state!
+              }
+            : p
+        )
+      );
+    } catch (error) {
+      console.error("Error updating product status:", error);
     }
   };
   
-  
+
   return (
     <div>
       <Header />
@@ -92,11 +106,10 @@ function YourStore() {
               products.map((product, index) => (
                 <div className="col-md-3 mb-4" key={index}>
                   <ProductOwnerCard
-                     image={product.image_url}
-                    title={product.product_name}
-                    description={product.description}
-                    status={product.status || "Published"} // Default status if not present
-                    // handleClick={() => navigate(`/product/${product.id}`)}
+                    product={product}
+                    onStatusChange={handleStatusChange}
+                    onEditClick={() => navigate(`/productuploadform/${product.id}`)}
+                    onDeleteClick={()=>handleDelete(product.id)}
                   />
                 </div>
               ))

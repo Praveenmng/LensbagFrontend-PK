@@ -70,6 +70,7 @@ function App() {
 
       <Routes>
 
+
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signUp" element={<Signup />} />
 
@@ -80,6 +81,7 @@ function App() {
 
         <Route path="/productdetails/:id" element={<ProductDetails />} />
         <Route path="/ecompany" element={<Ecompany />} />
+        <Route path="/productuploadform/:id" element={<ProductUploadForm />} />
         <Route path="/productuploadform" element={<ProductUploadForm />} />
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/profilesettings" element={<ProfileSettings />} />
