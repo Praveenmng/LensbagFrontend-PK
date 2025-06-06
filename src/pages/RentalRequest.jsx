@@ -5,14 +5,15 @@ import { useParams } from "react-router-dom";
 import TermsCheckbox from "../Components/Term";
 import axios from "axios";
 import { useUser } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 function RentalRequest() {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [date, setDate] = useState({ fromDate: "", toDate: "" });
     const [termsAccepted, setTermsAccepted] = useState(false);
-
-    const{userName,ogin}=useUser();
+    const navigate = useNavigate();
+    const{userName,login}=useUser();
     useEffect(() => {
         if (!login) {
           alert("You have to login first to view your rented products.");

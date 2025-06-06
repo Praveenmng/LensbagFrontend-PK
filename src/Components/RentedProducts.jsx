@@ -1,5 +1,4 @@
 import React from "react";
-
 import axios from "axios";
 
 function RentedProducts({ product }) {
@@ -10,7 +9,7 @@ function RentedProducts({ product }) {
     axios.post("/api/return_requests", {
       rented_product_id: product.id,      // rented_products.id
       product_id: product.product_id,     // products.id
-      return_request_date    
+      return_request_date:product.return_date 
     }, { withCredentials: true })
       .then(res => {
         alert("Return request sent to the owner.");

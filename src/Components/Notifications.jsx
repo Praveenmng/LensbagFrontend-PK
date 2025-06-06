@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
-
 import axios from "axios";
 
 function NotificationDropdown() {
-
   const [notifications, setNotifications] = useState([]);
   const [open, setOpen] = useState(false);
 
   const fetchNotifications = () => {
     axios
       .get("/api/notifications", { withCredentials: true })
-      .then((res) => setNotifications(res.data))
-
+    
+      .then((res) => {
+        console.log("Notifications received:", res.data);  // Debug here
+        setNotifications(res.data);
+      })
       .catch((err) => console.error(err));
-
   };
 
   useEffect(() => {
@@ -31,21 +31,31 @@ function NotificationDropdown() {
 
   // Handles both rental and return request responses
   const handleResponse = (notificationId, rentalRequestId, returnRequestId, action) => {
+    console.log("Responding to:", {
+      notificationId,
+      rentalRequestId,
+      returnRequestId,
+      action,
+    });
+  
     const apiUrl = returnRequestId
       ? "/api/return_requests/respond"
       : "/api/rental_requests/respond";
-
+  
+    console.log("Calling API URL:", apiUrl);
+  
     const payload = returnRequestId
       ? { notificationId, returnRequestId, action }
       : { notificationId, rentalRequestId, action };
-
+  
     axios
       .post(apiUrl, payload, { withCredentials: true })
       .then(() => {
         setNotifications((prev) => prev.filter((n) => n.id !== notificationId));
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.error("Error responding:", err));
   };
+  
 
   return (
     <div className="notification-container position-relative">
@@ -82,24 +92,28 @@ function NotificationDropdown() {
             notifications.map((n) => (
               <div key={n.id} className="dropdown-item border-bottom mb-2">
                 {/* Show rental request details if available */}
-                <h6>Rental Requests</h6>
                 {n.requested_start_date && (
                   <>
+                    <h6>Rental Requests</h6>
                     <p>
                       <strong>{n.requester_name}</strong> requested{" "}
                       <strong>{n.product_name}</strong>
-                      <strong><span>Contact:</span>{n.phone_number}</strong>
-                    </p> 
+                      <br />
+                      <strong>Contact:</strong> {n.phone_number}
+                    </p>
                     <p>
-                      From: {new Intl.DateTimeFormat('en-IN', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: '2-digit'
-                      }).format(new Date(n.requested_start_date))} <br />
-                      To: {new Intl.DateTimeFormat('en-IN', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: '2-digit'
+                      From:{" "}
+                      {new Intl.DateTimeFormat("en-IN", {
+                        year: "numeric",
+                        month: "short",
+                        day: "2-digit",
+                      }).format(new Date(n.requested_start_date))}
+                      <br />
+                      To:{" "}
+                      {new Intl.DateTimeFormat("en-IN", {
+                        year: "numeric",
+                        month: "short",
+                        day: "2-digit",
                       }).format(new Date(n.requested_end_date))}
                     </p>
                   </>
@@ -108,15 +122,21 @@ function NotificationDropdown() {
                 {/* Show return request details if available */}
                 {n.return_request_date && (
                   <>
+                    <h6>Return Requests</h6>
                     <p>
                       <strong>{n.requester_name}</strong> requested to RETURN{" "}
                       <strong>{n.product_name}</strong>
+                      <br />
+                      <strong>Contact:</strong> {n.phone_number}
                     </p>
-                    <p>Return requested on:  {new Intl.DateTimeFormat('en-IN', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: '2-digit'
-                      }).format(new Date(n.return_request_date))}</p>
+                    <p>
+                      Return requested on:{" "}
+                      {new Intl.DateTimeFormat("en-IN", {
+                        year: "numeric",
+                        month: "short",
+                        day: "2-digit",
+                      }).format(new Date(n.return_request_date))}
+                    </p>
                   </>
                 )}
 
@@ -128,7 +148,12 @@ function NotificationDropdown() {
                   <button
                     className="btn btn-sm btn-success"
                     onClick={() =>
-                      handleResponse(n.id, n.rental_request_id, n.return_request_id, "accepted")
+                      handleResponse(
+                        n.id,
+                        n.rental_request_id,
+                        n.return_request_id,
+                        "accepted"
+                      )
                     }
                   >
                     Accept
@@ -136,7 +161,12 @@ function NotificationDropdown() {
                   <button
                     className="btn btn-sm btn-danger"
                     onClick={() =>
-                      handleResponse(n.id, n.rental_request_id, n.return_request_id, "denied")
+                      handleResponse(
+                        n.id,
+                        n.rental_request_id,
+                        n.return_request_id,
+                        "denied"
+                      )
                     }
                   >
                     Deny
