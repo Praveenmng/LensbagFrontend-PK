@@ -53,17 +53,18 @@ function handlesubmit(event){
   };
  
 
-    return (
-      <div className={styles.container}>
-        <div className="image col-xxl-8 col-xl-8 col-lg-8 col-md-8">
-          <img
-            src={LoginCover}
-            alt="Signup"
-            style={{ maxHeight: "100vh", objectFit: "cover" }}
-          />
-        </div>
+  return (
+    <div className={styles.container}>
+      <div className={styles.left}>
+        <img
+          src={LoginCover}
+          alt="Login Visual"
+          className={styles.coverImage}
+        />
+      </div>
   
-        <div className={`${styles.signupform} col-xxl-4 col-xl-4 col-lg-4 col-md-4`}>
+      <div className={styles.signupform}>
+        <div className={styles.formInner}>
           <div className={styles.logo}>
             <img src={Logo} alt="Logo" />
           </div>
@@ -71,13 +72,11 @@ function handlesubmit(event){
           <h3 className={styles.loginHeader}>Login</h3>
   
           <div className="mb-3">
-            <label htmlFor="exampleFormControlInput1" className="form-label">
-              Email address
-            </label>
+            <label htmlFor="email" className="form-label">Email address</label>
             <input
               type="email"
               className="form-control"
-              id="exampleFormControlInput1"
+              id="email"
               placeholder="name@example.com"
               onChange={handleEmail}
               value={email}
@@ -85,14 +84,11 @@ function handlesubmit(event){
           </div>
   
           <div className="mb-3">
-            <label htmlFor="inputPassword5" className="form-label">
-              Password
-            </label>
+            <label htmlFor="password" className="form-label">Password</label>
             <input
               type="password"
               className={`form-control ${styles.form}`}
-              id="inputPassword5"
-              aria-describedby="passwordHelpBlock"
+              id="password"
               onChange={handlePassword}
               value={password}
             />
@@ -103,25 +99,26 @@ function handlesubmit(event){
               className="form-check-input"
               type="checkbox"
               value="remember-me"
-              id="flexCheckDefault"
+              id="remember"
             />
-            <label className="form-check-label" htmlFor="flexCheckDefault">
-              Remember me
-            </label>
+            <label className="form-check-label" htmlFor="remember">Remember me</label>
           </div>
   
-          <div className="d-flex justify-content-center">
-            <button className="btn btn-dark w-100"
-             type="submit"
-             onClick={handlesubmit}
-             >
-              Login
-            </button>
-           
-          </div>
-          <p className="mt-4" style={{textAlign:"center", color:"GrayText"}} onClick={handleNavigate}>Create your account</p>
+          <button className="btn btn-dark w-100" onClick={handlesubmit}>
+            Login
+          </button>
+  
+          <p
+            className="mt-4 text-center text-muted"
+            style={{ cursor: "pointer" }}
+            onClick={handleNavigate}
+          >
+            Create your account
+          </p>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+  
+    }
 export default LoginPage;

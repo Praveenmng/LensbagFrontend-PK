@@ -19,6 +19,10 @@ import YourBag from "./pages/YourBag";
 import { useUser } from "./context/UserContext";
 import { useEffect } from "react";
 
+
+
+
+
 // local array for ui
 const products = [
   {
