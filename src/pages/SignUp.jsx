@@ -15,11 +15,13 @@ function Signup() {
   
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("");
+  const[name,setName]=useState("")
   const [password, setPassword] = useState("");
   const [city, setCity] = useState("");
   const [zip, setZip] = useState("");
   const [state, setState] = useState("");
   const [phoneNumber,setPhoneNumber]=useState("");
+  const[address,setAddress]=useState("");
 
  function handleNavigate(){
   navigate("/login");
@@ -41,6 +43,10 @@ function Signup() {
     setState(event.target.value);
   }
 
+  function handleName(event){
+    setName(event.target.value)
+  }
+
   function handleCity(event) {
     setCity(event.target.value);
   }
@@ -51,6 +57,13 @@ function Signup() {
  function handlePhoneNumber(event){
   setPhoneNumber(event.target.value);
  }
+
+function handleAddress(event){
+  setAddress(event.target.value)
+}
+
+
+
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -58,10 +71,12 @@ function Signup() {
       email,
       username,
       password,
+      name,
       city,
       state,
       zip,
-      phoneNumber
+      phoneNumber,
+      address
     };
 
     axios
@@ -142,6 +157,29 @@ function Signup() {
               className="form-control"
               id="phone"
               onChange={handlePhoneNumber}
+            />
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="address" className="form-label">Name</label>
+            <input
+              type="text"
+              className="form-control"
+              id="city"
+              onChange={handleName}
+              value={name}
+            />
+          </div>
+
+
+          <div className="mb-3">
+            <label htmlFor="address" className="form-label">Resident Address</label>
+            <input
+              type="text"
+              className="form-control"
+              id="city"
+              onChange={handleAddress}
+              value={address}
             />
           </div>
 

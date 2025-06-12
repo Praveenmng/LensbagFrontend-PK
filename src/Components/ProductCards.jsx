@@ -42,18 +42,7 @@ function ProductCards({ id, image, title, description }) {
           </button>
 
           <div>
-            {/* <img
-              src={LikeButton}
-              alt="Like"
-              id="likebutton"
-              style={{ width: "24px", marginRight: "10px", cursor: "pointer" }}
-            />
-            <img
-              src={CartButton}
-              alt="Cart"
-              id="cartbutton"
-              style={{ width: "24px", cursor: "pointer" }}
-            /> */}
+          
           </div>
         </div>
       </div>

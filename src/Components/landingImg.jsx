@@ -14,7 +14,7 @@ function LandingImage() {
           <div className="carousel-item">
             <img src={landingImg2} className="d-block w-100" alt="Landing 2" />
           </div>
-        </div>
+        </div>  
       </div>
 
       {/* Overlay Text */}
@@ -26,7 +26,7 @@ function LandingImage() {
           <p className="lead my-3">Rent Our Gear....Alongside explore Rentals</p>
           <div className="mt-3">
             <Link to="/products">
-              <button className="btn btn-primary">Check our Products</button>
+            <button type="button" class="btn btn-outline-light">Check the Products</button>
             </Link>
           </div>
         </div>

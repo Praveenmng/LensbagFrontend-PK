@@ -28,38 +28,107 @@ function Header() {
   }
   
   return (
-    <div className="d-flex flex-wrap align-items-center justify-space-between justify-content-md-between py-3 mb-4 border-bottom" style={{ margin: '2%' }}>
-      <div className="col-md-3 mb-2 mb-md-0">
-        <img src={logo} alt="Logo" />
-      </div>
+<nav className="navbar navbar-expand-md navbar-light bg-white border-bottom px-3 py-3">
+  <div className="container-fluid d-flex justify-content-between align-items-center">
+    
+    {/* Logo */}
+    <Link className="navbar-brand" to="/">
+      <img src={logo} alt="Logo" style={{ maxHeight: '80px' }} />
+    </Link>
 
-      <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><Link to="/home" className="nav-link px-2 link-secondary">Home</Link></li>
-        <li><Link to="/products" className="nav-link px-2 link-secondary">Products</Link></li>
-        <li><Link to="/yourbag" className="nav-link px-2 link-secondary">Your Bag</Link></li>
-        <li><Link to="/yourstore" className="nav-link px-2 link-secondary">Your Store</Link></li>
+    {/* Toggler + Notification (Mobile Only) */}
+    <div className="d-md-none d-flex align-items-center gap-2">
+      {/* Toggler */}
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarContent"
+        aria-controls="navbarContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span className="navbar-toggler-icon"></span>
+      </button>
+
+      {/* Notification for Mobile */}
+      {login && <NotificationDropdown />}
+    </div>
+
+    {/* Collapsible Content */}
+    <div className="collapse navbar-collapse" id="navbarContent">
+      {/* Nav Links */}
+      <ul className="navbar-nav mx-auto mb-2 mb-md-0">
+        <li className="nav-item">
+          <Link className="nav-link" to="/home">Home</Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/products">Products</Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/yourbag">Your Bag</Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/yourstore">Your Store</Link>
+        </li>
       </ul>
 
-      <div className="col-md-3 text-end">
-        {!login ? (
-          <div>
+      {/* Mobile: Account Info or Login/Signup - aligned with nav */}
+      <ul className="navbar-nav d-md-none">
+        {login ? (
+          <>
+            <li className="nav-item">
+              <span className="nav-link">Welcome {userName}!</span>
+            </li>
+            <li className="nav-item">
+              <ProfileDropDown handleLogout={handleLogout} dropdownClass="dropdown-menu-end" />
+            </li>
+          </>
+        ) : (
+          <>
+            <li className="nav-item">
+              <Link className="nav-link" to="/login">
+                <button type="button" className="btn btn-outline-dark btn-sm w-100">Login</button>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/signup">
+                <button type="button" className="btn btn-dark btn-sm w-100">Sign-up</button>
+              </Link>
+            </li>
+          </>
+        )}
+      </ul>
+
+      {/* Desktop: Account Info */}
+      <div className="d-none d-md-flex align-items-center gap-2">
+        {login ? (
+          <>
+            <p className="m-0">Welcome {userName}!</p>
+            <ProfileDropDown handleLogout={handleLogout} dropdownClass="dropdown-menu-end" />
+            <NotificationDropdown />
+          </>
+        ) : (
+          <>
             <Link to="/login">
-              <button type="button" className="btn btn-outline-dark me-2">Login</button>
+              <button type="button" className="btn btn-outline-dark btn-sm">Login</button>
             </Link>
             <Link to="/signup">
-              <button type="button" className="btn btn-dark">Sign-up</button>
+              <button type="button" className="btn btn-dark btn-sm">Sign-up</button>
             </Link>
-          </div>
-        ) : (
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "10px", flexWrap: "nowrap" }}>
-            <p className="mb-1">Welcome {userName}!</p>
-            <ProfileDropDown handleLogout={handleLogout} className="dropdown-menu dropdown-menu-start" />
-            <NotificationDropdown/>
-          </div>
+          </>
         )}
       </div>
-
     </div>
+  </div>
+</nav>
+
+
+
+
+  
+  
+  
   );
 }
 

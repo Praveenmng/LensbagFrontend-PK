@@ -1,50 +1,45 @@
-
+// SearchSection.jsx
 import React, { useState } from "react";
-function SearchSection() {
+import axios from "axios";
 
-  const [searchText,setSearchText]=useState('')
-  const [products, setProducts] = useState([]);
- 
-  function handleSearch(event){
-    
-    const searchInput=event.target.value;
-    setSearchText(searchInput);
-    
-  }
-  function handleSubmit(event){
-   event.preventDefault(); 
+function SearchSection({ onSearchResults }) {
+  const [searchText, setSearchText] = useState("");
 
-    // Fetching products from the backend
-    fetch(`/api/products?search=${searchText}`)
-      .then((res) => res.json())
-      .then((data) => {
-      
-        setProducts(data); 
-        setFilteredProducts(data); 
-      })
-      .catch((err) => console.error("Error fetching products:", err));
+  function handleSearchInputChange(event) {
+    setSearchText(event.target.value);
   }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    axios
+    .get("/api/products", {
+      params: { search: searchText },
+      withCredentials: true, // If your backend uses session cookies
+    })
+    .then((res) => {
+      onSearchResults(res.data); // Update parent with new search results
+    })
+    .catch((err) => {
+      console.error("Error fetching products:", err);
+    });
+  }
+
   return (
-   
-      
-<div className="container-fluid mt-2 px-3">
-  
-  <form className="d-flex" role="search" value={searchText} onSubmit={handleSubmit}>
-    <input
-      className="form-control me-2"
-      type="search"
-      placeholder="Search"
-      aria-label="Search"
-      onChange={handleSearch}
-      value={searchText}
-    />
-    <button className="btn btn-dark"  type="submit">
-      Search
-    </button>
-  </form>
-</div>
-
-    
+    <div className="container-fluid mt-2 px-3">
+      <form className="d-flex" role="search" onSubmit={handleSubmit}>
+        <input
+          className="form-control me-2"
+          type="search"
+          placeholder="Search products..."
+          aria-label="Search"
+          onChange={handleSearchInputChange}
+          value={searchText}
+        />
+        <button className="btn btn-dark" type="submit">
+          Search
+        </button>
+      </form>
+    </div>
   );
 }
 

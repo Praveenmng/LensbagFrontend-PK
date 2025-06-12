@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import EditForm from "../Components/EditForm";
 import Header from "../Components/Header";
@@ -6,9 +6,11 @@ import ToggleSwitch from "../Components/ToggleSwitch";
 import { Form, Container, Row, Col, Button } from "react-bootstrap";
 import RentalPreferenceForm from "../Components/RentalPreference";
 import Footer from "../Components/Footer";
+import { useUser } from "../context/UserContext";
 
 function ProfileSettings() {
-  const userId = 1; 
+const {login}=useUser();
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -18,6 +20,32 @@ function ProfileSettings() {
   const [pincode, setPincode] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+    
+ useEffect(() => {
+  if (!login) {
+    alert("You have to login first to view your profile.");
+    window.location.href = "/home"; // Redirect to home if not logged in
+  }
+}, [login]); // Dependency array to check login status on mount
+
+  // Fetch user data on mount
+  useEffect(() => {
+    axios
+      .get("/api/userprofile", { withCredentials: true })
+      .then((res) => {
+        const data = res.data;
+        setUsername(data.username || "");
+        setEmail(data.email || "");
+        setName(data.name || "");
+        setPhone(data.phone_number || "");
+        setCity(data.city || "");
+        setAddress(data.address || "");
+        setPincode(data.zip || "");
+      })
+      .catch((err) => {
+        console.error("Failed to fetch user profile:", err);
+      });
+  }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -29,23 +57,23 @@ function ProfileSettings() {
       city,
       address,
       zip: pincode,
-      password: newPassword,
+      password: newPassword === confirm ? newPassword : null,
     };
 
-    // Remove empty fields
+    // Remove empty or null fields
     Object.keys(formData).forEach((key) => {
-      if (formData[key] === "") {
+      if (!formData[key]) {
         delete formData[key];
       }
     });
 
     axios
-      .patch(`http://localhost:5000/updateProfile/${userId}`, formData)
-      .then(function (response) {
+      .patch("/api/profile", formData, { withCredentials: true })
+      .then((response) => {
         alert("Profile updated successfully!");
         console.log("Update response:", response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         alert("Error updating profile.");
         console.error("Update error:", error.response || error.message);
       });
@@ -78,8 +106,8 @@ function ProfileSettings() {
             <Form>
               <RentalPreferenceForm
                 label="Default Pickup Address"
-                value={username}
-                setValue={setUsername}
+                value={address}
+                setValue={setAddress}
               />
               <ToggleSwitch label="Enable Pickup Location" />
             </Form>
@@ -94,7 +122,7 @@ function ProfileSettings() {
             <Form>
               <Form.Group controlId="oldPassword">
                 <Form.Label>Old Password</Form.Label>
-                <Form.Control type="password" disabled readOnly />
+                <Form.Control type="password" value="*********" disabled readOnly />
               </Form.Group>
               <EditForm label="New Password" value={newPassword} setValue={setNewPassword} />
               <EditForm label="Confirm New Password" value={confirm} setValue={setConfirm} />
