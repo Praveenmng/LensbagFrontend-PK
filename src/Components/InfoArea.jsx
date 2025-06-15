@@ -39,7 +39,7 @@ function InfoArea() {
                   <use xlink:href="#collection"></use>
                 </svg>
               </div>
-              <h4 className="fw-semibold mb-0 text-body-emphasis">Lend to others</h4>
+              <h4 className="fw-semibold mb-0 text-body-emphasis">Lend Your Products</h4>
               <p className="text-body-secondary">Paragraph of text beneath the heading to explain the heading.</p>
             </div>
 
@@ -49,7 +49,7 @@ function InfoArea() {
                   <use xlink:href="#gear-fill"></use>
                 </svg>
               </div>
-              <h4 className="fw-semibold mb-0 text-body-emphasis">Chat to customer</h4>
+              <h4 className="fw-semibold mb-0 text-body-emphasis">Owner Contacts You</h4>
               <p className="text-body-secondary">Paragraph of text beneath the heading to explain the heading.</p>
             </div>
 
@@ -59,7 +59,7 @@ function InfoArea() {
                   <use xlink:href="#speedometer"></use>
                 </svg>
               </div>
-              <h4 className="fw-semibold mb-0 text-body-emphasis">Set availability of days</h4>
+              <h4 className="fw-semibold mb-0 text-body-emphasis">Set Availability of Aays</h4>
               <p className="text-body-secondary">Paragraph of text beneath the heading to explain the heading.</p>
             </div>
 
@@ -70,7 +70,7 @@ function InfoArea() {
                   <use xlink:href="#table"></use>
                 </svg>
               </div>
-              <h4 className="fw-semibold mb-0 text-body-emphasis">Set competetive price</h4>
+              <h4 className="fw-semibold mb-0 text-body-emphasis">Set Competetive Price</h4>
               <p className="text-body-secondary">Paragraph of text beneath the heading to explain the heading.</p>
             </div>
           </div>

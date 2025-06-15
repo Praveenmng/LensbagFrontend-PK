@@ -41,21 +41,22 @@ function YourStore() {
       setLoading(false);
     }
   };
-  function handleDelete(productId){
-    if (!window.confirm("Are you sure you want to delete this product?")) return;
 
-    try {
-      axios.delete(`/api/products/${productId}`, {
-        withCredentials: true,
-      });
-  
-      // Remove the product from local state
-      setProducts((prev) => prev.filter((p) => p.id !== productId));
-    } catch (error) {
-      console.error("Error deleting product:", error);
-      alert("Failed to delete product.");
-    }
+ async function handleDelete(productId) {
+  if (!window.confirm("Are you sure you want to delete this product?")) return;
+
+  try {
+    await axios.patch(`/api/delete/products/${productId}`, {
+      withCredentials: true,
+    });
+
+    // Update state
+    setProducts((prev) => prev.filter((p) => p.id !== productId));
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    alert("Failed to delete product.");
   }
+}
 
   const handleStatusChange = async (productId, newStatus) => {
     try {
@@ -86,13 +87,15 @@ function YourStore() {
   return (
     <div>
       <Header />
-      <div className="container text-center mb-4">
-        <img
+      <div className="container text-center mt-4 mb-4">
+      <img
           src={AddButton}
           alt="Add Button"
           style={{ cursor: 'pointer', width: '150px' }}
           onClick={() => navigate("/productuploadform")}
         />
+      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+     
       </div>
 
       {loading ? (
@@ -101,8 +104,12 @@ function YourStore() {
         <div className="container">
           <div className="row">
             {products.length === 0 ? (
-              <p className="text-center">No products uploaded yet.</p>
+             
+                 <p style={{marginTop:"22px"}}>No products uploaded yet.</p>
+                 
             ) : (
+                
+             
               products.map((product, index) => (
                 <div className="col-md-3 mb-4" key={index}>
                   <ProductOwnerCard
@@ -117,6 +124,9 @@ function YourStore() {
           </div>
         </div>
       )}
+
+      </div>
+       
     </div>
   );
 }

@@ -41,20 +41,23 @@ function Products() {
 
       <SearchSection onSearchResults={handleSearchResults} />
 
-      <div className="container1 mt-3">
-        {products.length > 0 ? (
-          products.slice(0, 4).map((product, index) => (
-            <ProductCards
-              key={index}
-              id={product.id}
-              image={product.image_url}
-              title={product.product_name}
-              description={product.description}
-            />
-          ))
-        ) : (
-          <p className="text-center">No products found.</p>
-        )}
+      <div className="container d-flex mt-3" style={{gap:"4px"}}>
+        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+          {products.length > 0 ? (
+            products.slice(0, 4).map((product, index) => (
+              <ProductCards
+                key={index}
+                id={product.id}
+                image={product.image_url}
+                title={product.product_name}
+                description={product.description}
+              />
+            ))
+          ) : (
+            <p className="text-center">No products found.</p>
+          )}
+        </div>
+
       </div>
 
       <Footer />

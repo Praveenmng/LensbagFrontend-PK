@@ -47,7 +47,7 @@ function handlesubmit(event){
   })
   .catch((err) => {
     console.error(err);
-    alert("Login failed");
+    alert("Username or Password is incorrect");
   });
 
   };
