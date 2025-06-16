@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from '../assets/logo.png';
-import ProfileDropDown from "./ProfileDropdown";
+import ProfileDropDown from "./ProfileDropDown";
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import { useUser } from "../context/UserContext";
