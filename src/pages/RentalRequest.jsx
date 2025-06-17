@@ -3,7 +3,7 @@ import Header from "../Components/Header";
 import RatingComponent from "../Components/ratings";
 import { useParams } from "react-router-dom";
 import TermsCheckbox from "../Components/Term";
-import axios from "axios";
+import axios from "../axiosInstance"; // Adjust the import path as necessary
 import { useUser } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 

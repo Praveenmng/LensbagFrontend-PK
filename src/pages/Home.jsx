@@ -9,7 +9,7 @@ import "../lensbagstyle.css"
 import InfoSteps from "../Components/InfoSteps";
 import Footer from "../Components/Footer"
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../axiosInstance"; // Adjust the import path as necessary
 import { useUser } from "../context/UserContext";
 function Home() {
   const [products, setProducts] = useState([]);

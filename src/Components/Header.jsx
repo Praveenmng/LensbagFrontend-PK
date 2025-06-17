@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from '../assets/logo.png';
 import ProfileDropDown from "./ProfileDropDown";
-import axios from 'axios';
+import axios from "../axiosInstance"; // Adjust the import path as necessary
 import { Link } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 

@@ -5,7 +5,7 @@ import AddButton from "../assets/Addbt.png";
 import { useNavigate } from 'react-router-dom';
 import ProductOwnerCard from "../Components/productOwnerCard";
 import { useUser } from "../context/UserContext";
-import axios from "axios";
+import axios from "../axiosInstance"; // Adjust the import path as necessary
 
 function YourStore() {
   const navigate = useNavigate();

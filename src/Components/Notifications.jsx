@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../axiosInstance"; // Adjust the import path as necessary
 
 function NotificationDropdown() {
   const [notifications, setNotifications] = useState([]);

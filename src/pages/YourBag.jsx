@@ -4,7 +4,7 @@ import Header from "../Components/Header";
 import RentedProducts from "../Components/RentedProducts";
 import { useUser } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../axiosInstance"; // Adjust the import path as necessary
 
 function YourBag() {
   const { login } = useUser();

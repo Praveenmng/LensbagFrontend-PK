@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../axiosInstance"; // Adjust the import path as necessary
 import EditForm from "../Components/EditForm";
 import Header from "../Components/Header";
 import ToggleSwitch from "../Components/ToggleSwitch";

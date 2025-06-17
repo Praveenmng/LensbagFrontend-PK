@@ -2,7 +2,7 @@ import React,{useState} from "react"
 import styles from "../login.module.css"
 import LoginCover from "../assets/signupimg.png";
 import Logo from "../assets/logo.png"
-import axios from "axios"
+import axios from "../axiosInstance"; // Adjust the import path as necessary
 import { useNavigate } from 'react-router-dom';
 import { useUser } from "../context/UserContext"
 

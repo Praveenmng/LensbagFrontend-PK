@@ -1,6 +1,6 @@
 // SearchSection.jsx
 import React, { useState } from "react";
-import axios from "axios";
+import axios from "../axiosInstance"; // Adjust the import path as necessary
 
 function SearchSection({ onSearchResults }) {
   const [searchText, setSearchText] = useState("");

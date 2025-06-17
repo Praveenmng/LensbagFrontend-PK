@@ -9,7 +9,7 @@ import UserReview from "../Components/UserReview";
 import ProductCards from "../Components/ProductCards";
 import { useNavigate, useParams } from 'react-router-dom';
 import Footer from "../Components/Footer";
-import axios from "axios";
+import axios from "../axiosInstance"; // Adjust the import path as necessary
 import { useUser } from "../context/UserContext";
 
 function ProductDetails() {

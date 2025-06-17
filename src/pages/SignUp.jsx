@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios from "../axiosInstance"; // Adjust the import path as necessary
 import LoginCover from "../assets/signupimg.png";
 import Logo from "../assets/logo.png";
 import styles from "../signin.module.css";

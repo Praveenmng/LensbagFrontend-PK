@@ -3,7 +3,7 @@ import { useUser } from "../context/UserContext";
 import styles from "../profile.module.css"
 import profileimage from "../assets/eCompanyPic.png";
 import logo from "../assets/logo.png"
-import axios from "axios";
+import axios from "../axiosInstance"; // Adjust the import path as necessary
 import { useNavigate } from "react-router-dom";
 // import Header from "../Components/Header";
 

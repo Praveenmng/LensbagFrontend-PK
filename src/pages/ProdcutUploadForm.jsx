@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import axios from "../axiosInstance"; // Adjust the import path as necessary
 import Header from "../Components/Header";
 import { useUser } from "../context/UserContext";
 

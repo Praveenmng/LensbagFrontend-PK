@@ -3,7 +3,7 @@ import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import ProductCards from "../Components/ProductCards";
 import SearchSection from "../Components/SearchSection";
-import axios from "axios";
+import axios from "../axiosInstance"; // Adjust the import path as necessary
 import { useUser } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
